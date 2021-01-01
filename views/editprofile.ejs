@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>Edit-Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    	body{
+    margin-top:20px;
+    background:#F0F8FF;
+}
+.card {
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+}
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #e5e9f2;
+    border-radius: .2rem;
+}
+.card-header:first-child {
+    border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;
+}
+.card-header {
+    border-bottom-width: 1px;
+}
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    color: inherit;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e9f2;
+}
+    </style>
+</head>
+<body>
+<div class="container p-0">
+
+    <h1 class="h3 mb-3">Settings</h1>
+
+    <div class="row">
+        <div class="col-md-5 col-xl-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Profile Settings</h5>
+                </div>
+
+                <div class="list-group list-group-flush" role="tablist">
+                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
+                      Account
+                    </a>
+                  
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#delete" role="tab">
+                      Delete account
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 col-xl-8">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="account" role="tabpanel">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-actions float-right">
+                                <div class="dropdown show">
+                                 
+                                 
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-0">Public info</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="/edit-profile" method="POST">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                          
+                                        <div class="form-group">
+                                            <label for="inputUsername">About You</label>
+                                            <textarea rows="2" class="form-control" id="about" name="about" placeholder="<%=profile.about%>" ></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputlocation">Location</label>
+                                            <input type="text" class="form-control" id="location" name="location" placeholder="<%=profile.location%>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="college">College</label>
+                                            <input type="text" class="form-control" id="college" name="college" placeholder="<%=profile.about%>">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <img alt="N/A" src="<%=profile.avatar%>" class="rounded-circle img-responsive mt-2" width="128" height="128">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-actions float-right">
+                                <div class="dropdown show">
+                                    
+
+                                
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-0">Private info</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputFirstName">First name</label>
+                                        <input type="text" class="form-control" id="inputFirstName" placeholder="First name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputLastName">Last name</label>
+                                        <input type="text" class="form-control" id="inputLastName" placeholder="Last name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Address</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress2">Address 2</label>
+                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">City</label>
+                                        <input type="text" class="form-control" id="inputCity">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">State</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected="">Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputZip">Zip</label>
+                                        <input type="text" class="form-control" id="inputZip">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="delete" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <h5 class="card-title mb-0">Delete Profile</h5>
+                                <br>
+
+                            <button type="submit" class="btn btn-danger">Delete Account</button>
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>

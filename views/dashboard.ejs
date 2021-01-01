@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+  <!--  All snippets are MIT license http://bootdey.com/license -->
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="dashstyle.css">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/css/toastr.min.css" rel="stylesheet"/>
+  <script  src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container bootstrap snippets bootdey">
+    <div class="row">
+      <div class="panel">
+        <div class="cover-photo">
+          <div class="fb-timeline-img">
+            <img src="https://bootdey.com/img/Content/bg1.jpg" alt="">
+          </div>
+          <div class="fb-name">
+            
+            <h2><a href="/profile"> <% if (user) { %> <%= user.username %> 
+               <% } %> </a></h2>
+                    
+          </div>
+        </div>
+        
+        <div class="panel-body">
+          <div class="profile-thumb">
+            <img
+              src="<% if (user) { %> <%= user.avatar %>   <% } %>"
+              alt="">
+          </div>
+          <a href="/logout" class="fb-user-mail"><% if (user) { %> <%= user.email %>  %> <% } %></a>
+          <a href="/logout">  <button type="submit"  class="btn btn-sm btn-danger">Logout</button></a>
+        </div>
+      </div>
+
+      <div class="panel profile-info">
+        <form>
+          <textarea id="text" class="form-control input-lg p-text-area" rows="2"
+            placeholder="Whats in your mind today?">  </textarea>
+        </form>
+        <footer class="panel-footer">
+          <button type="button" onclick="myFunction()" class="btn btn-info pull-right">Post</button>
+          <ul class="nav nav-pills">
+
+          </ul>
+        </footer>
+      </div>
+
+
+
+      <script>
+
+
+         var socket = io('http://localhost:3000');
+        toastr.options = {
+            timeOut: 2000,
+            positionClass : 'toast-bottom-right',
+            extendedTimeOut: 0,
+            fadeOut: 0,
+            fadeIn: 0,
+            showDuration: 0,
+            hideDuration: 0,
+            debug: false
+        };
+
+     
+        socket.on('new-notification', (resp) => {
+          toastr.success(resp, 'Someone Post Something You Can check out')
+        });
+
+        socket.on('like-notification', (resp) => {
+          toastr.success('Someone Liked Your Post ')
+        });
+
+
+        socket.on('comment-replied', (resp) => {
+          toastr.success('Someone Commented on Post ')
+        });
+
+
+        function commentreplied()
+        {
+          let msg = document.getElementById('text2').value;
+          if(msg.trim() !== '') {
+        socket.emit("comment-replied", msg);
+      }
+        }
+
+      function  likedbutton()
+      {
+
+
+        let like = document.getElementById('like').label;
+        
+       
+        socket.emit("like-notification", like);
+
+
+      }
+
+
+        function myFunction() {
+
+
+
+          let msg = document.getElementById('text').value;
+
+
+          if(msg.trim() !== '') {
+        socket.emit("send-notification", msg);
+      }
+
+                  
+            
+          const postdata = {
+             text : msg,
+          }
+        
+          
+          const jsonString = JSON.stringify(postdata  );
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", "http://localhost:3000/postdata")
+          xhr.setRequestHeader("Content-Type", "application/json")
+          xhr.send(jsonString)
+          location.reload();
+        }
+
+  
+
+
+      </script>
+
+<% posts.forEach(function(posts){ %>
+
+      <div class="panel">
+        <div class="panel-body">
+          <div class="fb-user-thumb">
+            <img src="<% if (posts) { %> <%= posts.avatar %> <% } %>" id="avatar" alt="">
+          </div>
+          <div class="fb-user-details">
+            <h3><a href="#" class="#" id="name"><% if (posts) { %> <%= posts.name %>  <% } %></a></h3>
+            <p><%=moment(posts.date).fromNow(true);%></p>
+          </div>
+          <div class="clearfix"></div>
+          <p class="fb-user-status" id="text"><% if (posts) { %> <%= posts.text %>  <% } %>
+          </p>
+         
+          <div class="fb-status-container fb-border">
+            <div class="fb-time-action">
+              <form action="/like/<%=posts.id%>" method="POST">
+                <button type="submit" onclick="likedbutton()" class="">Like</button>  <label id="like"><%=posts.likes.length%></label>  <span></span>
+                 <span><%=posts.comments.length%>Comments</span>
+              </form>    
+            </div>
+          </div>
+
+
+              <ul class="fb-comments">
+                <% for(var i=0; i < posts.comments.length; i++) { %>
+                <li>
+
+                  
+                  <a href="#" class="cmt-thumb">
+                    <img src="<%=posts.comments[i].avatar%>" alt="">
+                  </a>
+                  <div class="cmt-details">
+                    
+                    <a href="#"><%=posts.comments[i].name%></a>
+                    <span><%=moment(posts.comments[i].date).fromNow(true);%></span>
+                    <span>
+                      
+                    </span>
+                    <p> <%=posts.comments[i].text%>  </p>
+                    <%if (posts.comments[i].user== user.id) { %>
+                         
+                   <form action="/comment/<%=posts.id%>/<%=posts.comments[i].id%> " method="POST">
+                      <button type="submit" onclick="cmmtdeleted()"  class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                      <% } %>
+                  </div>
+                </li>
+                <% } %>
+             
+                <li>
+
+                  <form action="/comments/<%= posts.id %>" method="POST">
+                    
+                    <div class="cmt-form">
+                  <textarea class="form-control"  id ="text2" name="text2" placeholder="Write a comment..." name=""></textarea> <span><button type="submit" onclick="commentreplied()" class="btn btn-sm btn-primary">Comment</button></span>
+                      
+                    </div>
+                  </li>
+                  
+                  </form>
+              </ul>
+  
+             
+  
+            
+          
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      
+      <% }) %>
+    </div>
+  </div>
+
+
+  
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/toastr.min.js"></script>
+  <script src="assets/js/socket.io.js"></script>
+
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript"> </script>
+  <script src="/reload/reload.js"></script>
+</body>
+
+</html>

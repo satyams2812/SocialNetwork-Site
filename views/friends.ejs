@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+ 
+    <title>Friends</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+    <style type="text/css">
+    	body{
+    margin-top:20px;
+    background:#FAFAFA;    
+}
+/*==================================================
+  Nearby People CSS
+  ==================================================*/
+
+.people-nearby .google-maps{
+  background: #f8f8f8;
+  border-radius: 4px;
+  border: 1px solid #f1f2f2;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.people-nearby .google-maps .map{
+  height: 300px;
+  width: 100%;
+  border: none;
+}
+
+.people-nearby .nearby-user{
+  padding: 20px 0;
+  border-top: 1px solid #f1f2f2;
+  border-bottom: 1px solid #f1f2f2;
+  margin-bottom: 20px;
+}
+
+img.profile-photo-lg{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
+
+#result {
+   position: absolute;
+   width: 100%;
+   max-width:870px;
+   cursor: pointer;
+   overflow-y: auto;
+   max-height: 400px;
+   box-sizing: border-box;
+   z-index: 1001;
+  }
+  .link-class:hover{
+   background-color:#f1f1f1;
+  }
+
+
+    </style>
+</head>
+<body>
+
+     <br /><br />
+    <div class="container" style="width:900px;">
+    
+     <h3 align="center">Search Friends</h3>   
+     <br /><br />
+     <div align="center">
+      <input type="text" name="search" id="search" placeholder="Search Friends" class="form-control" />
+     </div>
+     <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="people-nearby" class="people-nearby">
+                  
+                 
+                
+               
+              
+                </div>
+            </div>
+        </div>
+    </div>
+     <br />
+    </div> 
+
+   
+     
+  
+      
+    
+      
+    
+
+
+   <script>
+       $(document).ready(function(){
+           $.ajaxSetup({cache : false});
+           $('#search').keyup(function(){
+               $('#people-nearby').html('');
+               $('#state').val('');
+
+               var searchField = $('#search').val();
+               var expression = new RegExp(searchField,"i");
+
+               $.getJSON('http://localhost:3000/searchfriend/',function(data){
+                   $.each(data,function(key,value){
+                       if(value.username.search(expression)!=-1 ||value.google.username.search(expression) != -1 ||value.facebook.username.search(expression) != -1 )
+                       {
+                        $('#people-nearby').append(` <div id="nearby-user" class="nearby-user">
+                <div class="row">
+                  <div class="col-md-2 col-sm-2">
+                    <img src="${value.avatar}" id="profile-photo-lg" alt="user" class="profile-photo-lg">
+                  </div>
+                  <div class="col-md-7 col-sm-7">
+                    <h5><a href="userprofile/${value._id}" id="profile-link" class="profile-link">${value.username}</a></h5>
+                  </div>
+                  <div class="col-md-3 col-sm-3">
+                    <button class="btn btn-primary pull-right">Add Friend</button>
+                  </div>
+                </div>
+              </div>
+              
+             
+              
+              `);
+                       }
+                   })
+               })
+           })
+       })
+   </script>   
+
+
+
+
+    
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>

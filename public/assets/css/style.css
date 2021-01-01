@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background-color:#d6dbd7; font-family:arial}
+ #main{ padding:15px 0;}
+ .full{width:100%; float:left;}
+.box-shadow{ box-shadow:0 0 10px #888; background:#fff; padding:15px; border-radius:5px; min-height:100px;     width: 100%;
+    float: left;}
+.user{ width:100px; height:100px; margin: 20px auto; border-radius:50%; overflow:hidden; position:relative;}
+.user img{ position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; max-height:100%; max-width:100%;}
+.username { font-size:18px; color:#545454; font-weight:600; text-align:center; line-height:normal; padding:10px 0;}
+.userprotext{ font-size:14px; color:#9a9a9a; text-align:center; line-height:normal;}
+
+.loggeduser{ width:100%; float:left;}
+.loggeduser img{ float:left; max-width:50px;}
+.loggeduserName {    margin-left: 60px;
+    display: flex;
+    font-size: 15px;
+    font-weight: 600;
+    min-height: 50px;
+    align-items: center;
+}
+.post{ display:block;     padding-top: 5px;}
+.post .name{ display:block; line-height:normal;}
+.likes{ font-size:14px;}
+.post .text-muted{ font-size:13px; line-height:normal; font-weight:normal;}
+.postedText { font-size:14px; color:#888;}
+.commentText { margin-bottom:5px;}
+.commentText hr{margin: 3px 0;}
+.commentText strong{ font-size:12px; display:block; line-height:normal;}
+.commentText small{font-size:11px; line-height:normal;}
+
+#yourBtn {
+      /* position: relative; */
+   display: inline-block;
+    
+    /* width: 150px; */
+    padding: 4px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: 1px dashed #BBB;
+    text-align: center;
+	font-size:14px;
+    background-color: #DDD;
+    cursor: pointer;
+}
